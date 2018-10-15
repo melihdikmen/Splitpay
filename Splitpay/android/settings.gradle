@@ -1,3 +1,4 @@
 rootProject.name = 'Splitpay'
 
+
 include ':app'
