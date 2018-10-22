@@ -51,6 +51,7 @@ export default (styles = StyleSheet.create({
     marginRight: 10,
     borderColor: "#ff1443",
     marginTop: 20,
+    
   },
 
   buttonText: {
