@@ -5,7 +5,8 @@ import {
   Text,
   View,
   KeyboardAvoidingView,
-  StatusBar
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { observer } from "mobx-react";
@@ -28,6 +29,7 @@ export default class index extends Component {
 
   render() {
     return (
+     < TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
       <KeyboardAvoidingView style={styles.container}>
         <View style={styles.logo}>
           <Text style={styles.logoText}>Splitpay</Text>
@@ -84,6 +86,7 @@ export default class index extends Component {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     );
   }
 }

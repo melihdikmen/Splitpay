@@ -56,7 +56,7 @@ class store {
         .then((responseJson) => {
    
           // If server response message same as Data Matched
-         if(responseJson )
+         if(responseJson)
           {
             
               try {

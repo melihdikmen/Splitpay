@@ -3,22 +3,78 @@ import {
   View,
   StatusBar,
   Text,
-  ScrollView,
+  ActivityIndicator,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  RefreshControl,
+  Alert,
+  ToastAndroid
 } from "react-native";
 import { observer } from "mobx-react";
 import HomeHeader from "../components/Home/HomeHeader";
 import Groups from "../components/Home/groups";
-
 import GroupsStore from "../stores/GroupsStore";
+import AddButton from "../components/Home/addButton";
+
 @observer
 export default class index extends Component {
-  static navigationOptions = {
-    headerTitle: <HomeHeader />,
-    headerStyle: {
-      elevation: 0
-    }
+  constructor(props) {
+    super(props);
+
+    this._onRefresh=this._onRefresh.bind(this)
+    this.state = {
+      refreshing: false
+    };
+  }
+
+  success=()=>
+  {
+    GroupsStore.getAll()
+   ToastAndroid.show("Grup başarı ile silindi", ToastAndroid.LONG)
+    
+
+   
+
+  }
+
+  longPress(id,success) {
+    Alert.alert(
+      "Grubu Sil",
+      "Bu grubu silmek istiyor musunuz?",
+      [
+        {
+          text: "İptal",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Sil", onPress: () => GroupsStore.deleteGroup(id,success) }
+      ],
+      { cancelable: true }
+    );
+  }
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    GroupsStore.getAll();
+    this.setState({ refreshing: false });
+  };
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: <HomeHeader />,
+      headerStyle: {
+        elevation: 1
+      },
+
+      headerRight: (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("AddGroup");
+          }}
+        >
+          <AddButton />
+        </TouchableOpacity>
+      )
+    };
   };
 
   componentWillMount() {
@@ -27,13 +83,50 @@ export default class index extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{backgroundColor:'#FFFF',flex:1}}>
         <StatusBar backgroundColor="#ff1443" barStyle="light-content" />
         <FlatList
+          refreshControl={
+            <RefreshControl
+              tintColor="#ff00ff"
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />
+          }
+          ListHeaderComponent={() => {
+            return GroupsStore.getGroups ? (
+              GroupsStore.getGroups.length < 1 && (
+                <ActivityIndicator color={"#ff1443"} size={"large"} />
+              )
+            ) : (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flex: 1,
+                  marginTop: 10
+                }}
+              >
+                <Text style={{ fontSize: 25 }}>Grup Yok</Text>
+              </View>
+            );
+          }}
           data={GroupsStore.getGroups}
           renderItem={({ item }) => (
-            <TouchableOpacity>
-              <Groups groupName={item.groupName} info={item.groupInfo} />
+            <TouchableOpacity
+              onLongPress={()=>{this.longPress(item.groupId,this.success)}}
+              onPress={() => {
+                this.props.navigation.navigate("GroupEdit", {
+                  id: item.groupId
+                });
+              }}
+            >
+              <Groups
+                groupName={item.groupName}
+                info={item.groupInfo}
+                count={item.count}
+                money={item.groupPay}
+              />
             </TouchableOpacity>
           )}
         />
