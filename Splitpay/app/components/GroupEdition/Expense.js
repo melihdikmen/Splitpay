@@ -6,6 +6,7 @@
 
 import React, { Component } from "react";
 import { Text, StyleSheet, Image, View } from "react-native";
+import api from "../../config/config";
 
 export default class Expense extends Component {
   constructor(props) {
@@ -19,18 +20,20 @@ export default class Expense extends Component {
           <Image
             style={styles.image}
             source={{
-              uri: "http://192.168.1.104/Splitpay/uploads/expense.png"
+              uri: api + "/uploads/expense.png"
             }}
           />
         </View>
         <View style={styles.content}>
           <View style={styles.expenseInfo}>
-            <Text style={{fontSize:20}}>Ulaşım Masrafları </Text>
+            <Text style={{ fontSize: 25 }}>{this.props.expenseTitle}</Text>
+            <Text style={{ fontSize: 10 }}>{this.props.byPaid}</Text>
+
           </View>
 
           <View style={styles.expense}>
-            <Text style={styles.pay}>1000.00 TL</Text>
-            <Text>Melih Dikmen</Text>
+            <Text style={styles.pay}>{this.props.paid}</Text>
+            <Text>{this.props.date}</Text>
           </View>
         </View>
       </View>
@@ -42,38 +45,45 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
     flexDirection: "row",
-    height: 70,
+    //height: 70,
     marginLeft: 10,
     marginRight: 10,
     backgroundColor: "#fff",
-    elevation: 5
+    borderBottomWidth:1,
+    borderBottomColor: '#ddd',
+
+    
   },
   logo: {
     flex: 1,
     backgroundColor: "transparent",
     justifyContent: "center",
-    marginLeft: 5
+    marginLeft: 5,
+    marginBottom: 5,
   },
 
   content: {
     flex: 3,
     flexDirection: "row",
-    marginRight:5
+   // marginRight: 5
   },
 
   image: {
-    width: 70,
-    height: 70
+    width: 50,
+    height: 50
   },
 
   expenseInfo: {
     flex: 2,
-    justifyContent:'center'
+    justifyContent: "center"
   },
   expense: {
-    flex: 1
+    flex: 2,
+    alignItems: 'flex-end',
+    justifyContent:'center',
+    marginRight: 5,
   },
-  pay:{
-    color:'#ff1e4b'
+  pay: {
+    color: "#ff1e4b"
   }
 });

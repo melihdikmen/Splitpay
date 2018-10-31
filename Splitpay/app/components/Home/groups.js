@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 15,
     flexDirection: "row",
-    elevation: 2
+     elevation: 1
   },
   groupPhoto: {
     flex: 3,

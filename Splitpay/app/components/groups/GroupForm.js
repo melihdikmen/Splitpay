@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from "react";
-import { TextInput, StyleSheet,  View,} from "react-native";
+import { TextInput, StyleSheet,  View,Text,TouchableOpacity} from "react-native";
 
 export default class GroupForm extends Component {
   constructor(props) {
@@ -16,17 +16,20 @@ export default class GroupForm extends Component {
   render() {
     return (
       <View style={styles.loginInput}>
+      <Text style={styles.title}>{this.props.title}</Text>
+      <TouchableOpacity onPress={this.props.onPress}>
         <TextInput
           onChangeText={this.props.store}
           underlineColorAndroid="transparent"
           keyboardType={this.props.keyboard}
           maxLength={this.props.length}
-         
+          value={this.props.value}
+          editable={this.props.editable}
           style={[
             styles.username,
-            { borderColor: this.state.focus ? "#ff1e5a" : "#fff" }
+            { borderColor: this.state.focus ? "#ff1e5a" : "#ddd" }
           ]}
-          placeholder={this.props.groupName}
+          placeholder={this.props.placeholder}
           onFocus={() => {
             this.setState({
               focus: true
@@ -38,7 +41,7 @@ export default class GroupForm extends Component {
             });
             
           }}
-        />
+        /></TouchableOpacity>
       </View>
     );
   }
@@ -46,21 +49,29 @@ export default class GroupForm extends Component {
 
 const styles = StyleSheet.create({
   username: {
-    borderWidth: 1.5,
-    // borderColor:'#ff1443',
+    borderWidth: 1,
+   // borderColor:'#ff1443',
     height: 60,
-    borderRadius: 30,
+    borderRadius: 10,
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
     padding: 5,
     paddingLeft: 10,
-    backgroundColor: "#ffff",
-    elevation: 2,
-    
+   // backgroundColor: "#dddd",
+    //elevation: 1,
+    marginTop:5
+  },
+
+  title:{
+    fontSize:15,
+    color:'#ff1443',
+    marginLeft:5
   },
 
   loginInput: {
-    marginTop: 10
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   }
 });

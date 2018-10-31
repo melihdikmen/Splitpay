@@ -84,7 +84,7 @@ export default class index extends Component {
   render() {
     return (
       <View style={{backgroundColor:'#FFFF',flex:1}}>
-        <StatusBar backgroundColor="#ff1443" barStyle="light-content" />
+        <StatusBar backgroundColor="#000" barStyle="light-content" />
         <FlatList
           refreshControl={
             <RefreshControl

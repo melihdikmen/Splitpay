@@ -46,14 +46,19 @@ export default class AddGroup extends Component {
           store={text => {
             GroupStore.setGroupName(text);
           }}
-          groupName="Grup Adı"
+          
           length={30}
+          title={'Grup Adı'}
+          placeholder={'Grup Adı'}
+
         />
         <GroupForm
           store={text => {
             GroupStore.setGroupInfo(text);
           }}
-          groupName="Grup Bilgisi"
+          title={'Grup Bilgisi'}
+          placeholder={'Grup Bilgisi'}
+         
           length={30}
         />
         <GroupForm
@@ -61,7 +66,10 @@ export default class AddGroup extends Component {
             GroupStore.setGroupPay(text);
           }}
           keyboard={"numeric"}
-          groupName="Harcanan Miktar"
+          title={'Harcanan Miktar'}
+          placeholder={'Miktar'}
+ 
+          
         />
         <TouchableOpacity
           onPress={() => {
@@ -86,7 +94,7 @@ export default class AddGroup extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: "#FFF",
+    backgroundColor: "#FFF",
     //borderTopWidth: 1,
     borderColor: "#ddd"
   },

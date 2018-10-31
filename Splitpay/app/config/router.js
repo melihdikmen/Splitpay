@@ -9,7 +9,8 @@ import Register from "../pages/register";
 import Home from "../pages/Home";
 import AuthLoadingScreen from "../pages/AuthLoadingScreen";
 import AddGroup from "../pages/AddGroup";
-import GroupExpense from "../pages/GroupEditions/index";
+import GroupExpense from "../pages/GroupEditions/GroupExpense"
+import AddExpense from "../pages/GroupEditions/AddExpense"
 
 const AuthStack = StackNavigator({
   Login: {
@@ -22,12 +23,19 @@ const AuthStack = StackNavigator({
 });
 
 const GroupEdit = StackNavigator({
-  GroupExpensive: {
+  GroupExpense: {
     screen: GroupExpense,
+  },
+
+  AddExpense:{
+    screen:AddExpense,
     navigationOptions: {
-      header:null
+      
     }
   }
+
+
+  
 });
 
 const AppStack = StackNavigator(
@@ -42,13 +50,10 @@ const AppStack = StackNavigator(
 
     GroupEdit: {
       screen: GroupEdit,
-      navigationOptions:
-      {
-        headerStyle:{
-          elevation:1
-        },
-        title:"Harcamalar"
+      navigationOptions:{
+        header:null
       }
+      
     }
   },
   {

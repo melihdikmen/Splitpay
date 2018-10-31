@@ -15,7 +15,7 @@ export default class AddExpenseButton extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity  onPress={this.props.onPress} style={styles.button}>
           <Text style={styles.text}>Ekle</Text>
         </TouchableOpacity>
       </View>
