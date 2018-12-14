@@ -8,11 +8,12 @@ import {
   toJs
 } from 'react-native';
 import GroupStore from '../stores/GroupsStore'
+import ExpenseStore from '../stores/ExpenseStore';
 export default class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
-   //AsyncStorage.removeItem("userToken")
+  //AsyncStorage.removeItem("userToken")
   
   }
 
@@ -25,6 +26,9 @@ export default class AuthLoadingScreen extends React.Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+  ExpenseStore.setFullname(user.fullname,user.userId)
+  
+
   };
 
   // Render any loading content that you like here

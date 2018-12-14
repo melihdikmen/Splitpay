@@ -42,21 +42,21 @@ export default class index extends Component {
               <TextInput
                 underlineColorAndroid="transparent"
                 style={styles.username}
-                placeholder="Name"
+                placeholder="Ad ve Soyad"
                 autoCapitalize={"none"}
                 onChangeText={text => RegisterStore.setName(text)}
               />
               <TextInput
                 underlineColorAndroid="transparent"
                 style={styles.username}
-                placeholder="Username"
+                placeholder="Kullanıcı Adı"
                 autoCapitalize={"none"}
                 onChangeText={text => RegisterStore.setUsername(text)}
               />
               <TextInput
                 underlineColorAndroid="transparent"
                 style={styles.username}
-                placeholder="Password"
+                placeholder="Şifre"
                 secureTextEntry={true}
                 autoCapitalize={"none"}
                 onChangeText={text => RegisterStore.setPassword(text)}
@@ -64,7 +64,7 @@ export default class index extends Component {
               <TextInput
                 underlineColorAndroid="transparent"
                 style={styles.username}
-                placeholder="Password Again"
+                placeholder="Şifre Tekrar"
                 autoCapitalize={"none"}
                 secureTextEntry={true}
                 onChangeText={text => RegisterStore.setPasswordAgain(text)}

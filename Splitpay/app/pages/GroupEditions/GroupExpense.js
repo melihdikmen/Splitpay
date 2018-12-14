@@ -11,7 +11,10 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert,
+  ToastAndroid,
+  RefreshControl
 } from "react-native";
 import { observer } from "mobx-react";
 
@@ -19,26 +22,60 @@ import Expense from "../../components/GroupEdition/Expense";
 import ExpenseStore from "../../stores/ExpenseStore";
 import AddExpenseButton from "../../components/GroupEdition/AddExpenseButton";
 
-import Header from "../../components/Header"
-
+import Header from "../../components/Header";
 @observer
 export default class GroupExpense extends Component {
+
+  constructor(props)
+  { super(props)
+    this._onRefresh=this._onRefresh.bind(this)
+    this.state = {
+      refreshing: false
+    };
+  }
+
   static navigationOptions = ({ navigation }) => {
     return {
-        header:<Header onPress={()=>{navigation.popToTop()}} title={"Harcamalar"}/>,
-       
+      header: (
+        <Header
+          onPress={() => {
+            navigation.popToTop();
+          }}
+          add={()=>{navigation.navigate("AddExpense")}}
+          title={"Harcamalar"}
+        />
+      )
     };
   };
   componentWillMount() {
     ExpenseStore.setGroupId(this.props.navigation.getParam("id"));
-
     ExpenseStore.getAll();
+    
+    
+    
   }
+
+  success() {
+    ExpenseStore.getAll();
+    ToastAndroid.show("Gider başarıyla silindi.", ToastAndroid.LONG);
+  }
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    ExpenseStore.getAll();
+    this.setState({ refreshing: false });
+  };
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.content}>
           <FlatList
+          refreshControl={
+            <RefreshControl
+              tintColor="#ff00ff"
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />}
             ListHeaderComponent={() => {
               return ExpenseStore.getExpenses ? (
                 ExpenseStore.getExpenses.length < 1 && (
@@ -59,7 +96,32 @@ export default class GroupExpense extends Component {
             }}
             data={ExpenseStore.getExpenses}
             renderItem={({ item }) => (
-              <TouchableOpacity>
+              <TouchableOpacity
+                onLongPress={() => {
+                  Alert.alert(
+                    "Gider Silme",
+                    "Bu gideri silmek istiyor musunuz?",
+                    [
+                      {
+                        text: "İptal",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      },
+                      {
+                        text: "Sil",
+                        onPress: () =>
+                          ExpenseStore.deleteExpense(
+                            item.expenseId,
+                            item.fullname,
+                            this.success,
+                            
+                          )
+                      }
+                    ],
+                    { cancelable: false }
+                  );
+                }}
+              >
                 <Expense
                   expenseTitle={item.expenseTitle}
                   paid={item.paid + " TL"}
@@ -71,7 +133,7 @@ export default class GroupExpense extends Component {
           />
         </View>
 
-        <AddExpenseButton onPress={()=>{this.props.navigation.navigate("AddExpense")}}/>
+       
       </View>
     );
   }
@@ -80,7 +142,8 @@ export default class GroupExpense extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFF"
+    backgroundColor: "#FFFF",
+  
   },
 
   content: {

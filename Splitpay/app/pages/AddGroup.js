@@ -9,6 +9,7 @@ import { TouchableOpacity, StyleSheet, Text, View,ToastAndroid,TouchableWithoutF
 import GroupForm from "../components/groups/GroupForm";
 import GroupStore from "../stores/GroupsStore";
 import { observer } from "mobx-react";
+import Header from "../components/Header"
 @observer
 export default class AddGroup extends Component {
   constructor(props) {
@@ -25,15 +26,17 @@ export default class AddGroup extends Component {
   }
   static navigationOptions = ({ navigation }) => {
     return {
-      headerStyle: {
-        elevation: 2
-      },
-
-      title: "Grup Oluştur",
-
-      headerTitleStyle: {
-        marginLeft: 50
-      }
+      header:(
+        <Header
+        onPress={() => {
+          navigation.popToTop();
+        }}
+        
+        disabled={true}
+        opacity={0}
+        title={"Grup Ayarları"}
+      />
+      ),
     };
   };
   render() {
@@ -61,16 +64,7 @@ export default class AddGroup extends Component {
          
           length={30}
         />
-        <GroupForm
-          store={text => {
-            GroupStore.setGroupPay(text);
-          }}
-          keyboard={"numeric"}
-          title={'Harcanan Miktar'}
-          placeholder={'Miktar'}
- 
-          
-        />
+      
         <TouchableOpacity
           onPress={() => {
             GroupStore.createGroup(this.success);

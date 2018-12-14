@@ -70,7 +70,7 @@ class store {
       .then(response => response.json())
       .then(responseJson => {
         // If server response message same as Data Matched
-        if (responseJson) {
+        if (responseJson==true) {
           success()
         } else if (responseJson == "isUse") {
           Alert.alert("Kayıt Hatası", "Kullancı adı kullanımda", [

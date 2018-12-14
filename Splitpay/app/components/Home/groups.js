@@ -15,7 +15,7 @@ export default class Groups extends Component {
         <View style={styles.groupPhoto}>
           <Image
             style={{ flex: 1 }}
-            source={{ uri: api+"/uploads/pay.jpg" }}
+            source={{ uri: api+"/uploads/group/"+this.props.path+".jpg" }}
           />
         </View>
         <View style={styles.content}>
@@ -24,10 +24,10 @@ export default class Groups extends Component {
         </View>
         <View style={styles.info}>
           <Icon name={"money"} size={18}>
-            <Text>{this.props.money}</Text>
+            <Text> {this.props.money}</Text>
           </Icon>
           <Icon style={styles.icon} name={"user"} size={18}>
-            <Text>{this.props.count}</Text>
+            <Text> {this.props.count}</Text>
           </Icon>
         </View>
       </View>

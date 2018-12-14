@@ -12,7 +12,7 @@ export default class AddExpense extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.back}>
+        <View style={[styles.back,{opacity:this.props.backOpacity}]}>
           <TouchableOpacity onPress={this.props.onPress}>
             <Image
               source={require("../../node_modules/react-navigation/src/views/assets/back-icon.png")}
@@ -22,6 +22,9 @@ export default class AddExpense extends Component {
         <View style={styles.title}>
           <Text style={styles.titleText}>{this.props.title}</Text>
         </View>
+        <TouchableOpacity  disabled={this.props.disabled} onPress={this.props.add} style={[styles.addButton,{opacity:this.props.opacity,}]}>
+          <Icon name={"plus-circle"} size={30} />
+        </TouchableOpacity>
       </View>
     );
   }
@@ -37,18 +40,25 @@ const styles = StyleSheet.create({
   },
   title: {
     justifyContent: "center",
-    flex: 2
+    flex: 3
   },
 
-  titleText:{
-    fontSize:20,
-    fontWeight: 'bold',
-    color:'#000'
+  addButton: {
+    flex: 1,
+    justifyContent:'center',
+    alignItems: 'center',
+    elevation:1,
+  },
+
+  titleText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#000"
   },
 
   back: {
     justifyContent: "center",
-    flex: 1,
-    marginLeft:15
+    flex: 2,
+    marginLeft: 15
   }
 });

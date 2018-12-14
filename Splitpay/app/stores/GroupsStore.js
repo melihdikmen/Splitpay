@@ -2,26 +2,24 @@ import { observable, action, computed, toJS } from "mobx";
 import api from "../config/config";
 class GroupsStore {
   @observable
-  data = []="";
+  data = ([] = "");
   @observable
-  userId=""
+  userId = "";
   @observable
   groupName;
   @observable
-  groupInfo=""
+  groupInfo = "";
   @observable
-  groupPay=""
-  @observable enabled=false
+  groupPay = "";
+  @observable enabled = false;
 
-
-  @computed get getEnabled()
-  {
-    return this.enabled
+  @computed get getEnabled() {
+    return this.enabled;
   }
   @action
   setGroupName(text) {
     this.groupName = text;
-    this.isEnabled()
+    this.isEnabled();
   }
 
   @action
@@ -38,23 +36,15 @@ class GroupsStore {
     this.userId = id;
   }
 
-  @action isEnabled()
-  {
-    if(this.groupName)
-    {
-      this.enabled=true
-      
-    }
-    else
-    {
-      this.enabled=false
-     
-
+  @action isEnabled() {
+    if (this.groupName) {
+      this.enabled = true;
+    } else {
+      this.enabled = false;
     }
   }
 
-  @action deleteGroup(groupId,success)
-  {
+  @action deleteGroup(groupId, success) {
     fetch(api + "/deleteGroup", {
       method: "POST",
       headers: {
@@ -63,19 +53,17 @@ class GroupsStore {
       },
       body: JSON.stringify({
         userId: this.userId,
-        groupId:groupId
+        groupId: groupId
       })
     })
       .then(response => response.json())
       .then(responseJson => {
         // If server response message same as Data Matched
         if (responseJson) {
-          
           //console.warn(responseJson)
-          success()
-         
+          success();
         } else {
-          alert('silinemedi')
+          alert("silinemedi");
         }
       })
       .catch(error => {
@@ -83,8 +71,7 @@ class GroupsStore {
       });
   }
 
-  @action createGroup(success)
-  {
+  @action createGroup(success) {
     fetch(api + "/createGroup", {
       method: "POST",
       headers: {
@@ -93,20 +80,20 @@ class GroupsStore {
       },
       body: JSON.stringify({
         userId: this.userId,
-        groupName:this.groupName,
-        groupInfo:this.groupInfo,
-        groupPay:this.groupPay
+        groupName: this.groupName,
+        groupInfo: this.groupInfo,
+        
       })
     })
       .then(response => response.json())
       .then(responseJson => {
         // If server response message same as Data Matched
         if (responseJson) {
-          success()
-         
-          this.enabled=false
+          success();
+
+          this.enabled = false;
         } else {
-          alert("eklenemedi")
+          alert("eklenemedi");
         }
       })
       .catch(error => {
@@ -131,7 +118,7 @@ class GroupsStore {
         if (responseJson) {
           this.data = responseJson;
         } else {
-          this.data=""
+          this.data = "";
         }
       })
       .catch(error => {
