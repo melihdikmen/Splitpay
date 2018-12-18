@@ -64,13 +64,7 @@ const GroupSettingStack=StackNavigator({
     }
   },
 
-  PickPhoto:{
-    screen:PickPhoto,
-    navigationOptions:{
-      header:null
-    }
-  }
-
+  
 
 })
 

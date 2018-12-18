@@ -15,7 +15,7 @@ export default class Groups extends Component {
         <View style={styles.groupPhoto}>
           <Image
             style={{ flex: 1 }}
-            source={{ uri: api+"/uploads/group/"+this.props.path+".jpg" }}
+            source={{ uri: api+"/uploads/group/"+this.props.path+".jpg"+ '?' + new Date() }}
           />
         </View>
         <View style={styles.content}>

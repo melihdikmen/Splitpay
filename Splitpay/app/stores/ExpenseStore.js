@@ -24,8 +24,8 @@ class ExpenseStore {
   @observable
   fullname = "";
   @observable selectedItems = [];
-  @observable groupName;
-  @observable groupInfo;
+  @observable groupName=""
+  @observable groupInfo=""
   @observable path;
 
   @action setGroupName(text) {
@@ -33,13 +33,16 @@ class ExpenseStore {
   }
 
   @action setPath(text){
+   
     this.path=text
+    
+    
   }
 
   @action setImage(uri)
   {
     this.image=uri
-    alert(this.image)
+   
   }
   @action setFirstMember() {
     this.selectedItems = [];
@@ -97,6 +100,53 @@ class ExpenseStore {
   @computed
   get getUser() {
     return this.foundUser;
+  }
+
+  @computed
+  get getPath() {
+   
+    console.warn(this.path)
+    return toJS(this.path);
+  
+  }
+
+  @action UploadImage(){
+
+    const data=new FormData()
+    
+    data.append("groupId",this.groupId)
+    data.append("photo",{
+      uri:this.image,
+      type:"image/jpeg",
+      name:this.groupId+".jpg"
+    })
+
+
+    fetch(api + "/upload", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        'Content-Type': 'multipart/form-data',
+      },
+      body: data
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        // If server response message same as Data Matched
+        if (responseJson) {
+          
+          this.getGroupSetting();
+         
+          ToastAndroid.show('Fotoğraf değiştirme işlemi başarılı.', ToastAndroid.SHORT);
+          
+        } else {
+          console.warn("yüklenemedi");
+         
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   @action DeleteMember(userId, success) {

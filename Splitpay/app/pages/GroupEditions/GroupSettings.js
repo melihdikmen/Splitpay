@@ -12,8 +12,8 @@ import {
   View,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity
-  
+  TouchableOpacity,
+  RefreshControl
 } from "react-native";
 import api from "../../config/config";
 
@@ -22,23 +22,44 @@ import SettingForm from "../../components/GroupEdition/SettingForm";
 import AddButton from "../../components/GroupEdition/AddExpenseButton";
 import { observer } from "mobx-react";
 import ExpenseStore from "../../stores/ExpenseStore";
+import ImagePicker from "react-native-image-picker";
 
+const options = {
+  title: "Resim Seç",
+  takePhotoButtonTitle: "Fotoğraf Çek",
+  chooseFromLibraryButtonTitle: "Galeriden Seç",
+  quality: 1
+};
 
 @observer
 export default class GroupSettings extends Component {
-  componentWillMount() {
-    ExpenseStore.getGroupSetting();
- 
-
-   
-
-
-  }
   constructor(props) {
     super(props);
-  
   }
+  componentWillMount() {
+    ExpenseStore.getGroupSetting();
+   
+  }
+ 
 
+  selectPhoto() {
+    ImagePicker.showImagePicker(options, response => {
+      console.log("Response = ", response);
+
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.error) {
+        console.log("ImagePicker Error: ", response.error);
+      } else {
+        //const source = { uri: response.uri };
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+        ExpenseStore.setImage(response.uri);
+        ExpenseStore.UploadImage();
+      }
+    });
+  }
   
 
   render() {
@@ -48,21 +69,27 @@ export default class GroupSettings extends Component {
           Keyboard.dismiss();
         }}
       >
+
+     
         <View style={styles.container}>
           <Header
-          disabled={true}
-          opacity={0}
+            disabled={true}
+            opacity={0}
             onPress={() => {
               this.props.navigation.popToTop();
             }}
             title={"Grup Ayarları"}
           />
-          <TouchableOpacity  onPress={()=>{
-            this.props.navigation.navigate("PickPhoto")}
-          } style={styles.imageArea}>
+          <TouchableOpacity
+            onPress={this.selectPhoto.bind(this)}
+            style={styles.imageArea}
+          >
             <Image
               style={styles.photo}
-              source={{ uri: api + "/uploads/group/"+ExpenseStore.path+".jpg" }}
+              key={new Date()}
+              source={{
+                uri:api+"uploads/group/"+ExpenseStore.getPath+".jpg"+ '?' + new Date()
+              }}
             />
           </TouchableOpacity>
           <View style={styles.content}>
@@ -124,8 +151,8 @@ const styles = StyleSheet.create({
   },
 
   photo: {
-    height: 100,
-    width: 100,
-    borderRadius: 50
+    height: 120,
+    width: 120,
+    borderRadius: 60
   }
 });
