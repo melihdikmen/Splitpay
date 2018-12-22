@@ -13,7 +13,9 @@ class LoginModel extends CI_Model{
 
     public function register($data)
     {
-        return $this->db->insert('users',$data);
+         $result["isRegister"]=$this->db->insert('users',$data);
+        $result["last_id"]= $this->db->insert_id();
+        return $result;
     }
     
 }

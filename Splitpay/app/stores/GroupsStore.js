@@ -56,11 +56,11 @@ class GroupsStore {
         groupId: groupId
       })
     })
-      .then(response => response.json())
+      .then(response => response.text())
       .then(responseJson => {
         // If server response message same as Data Matched
         if (responseJson) {
-          //console.warn(responseJson)
+          console.warn(responseJson)
           success();
         } else {
           alert("silinemedi");
@@ -90,6 +90,7 @@ class GroupsStore {
         // If server response message same as Data Matched
         if (responseJson) {
           success();
+          console.warn(responseJson)
 
           this.enabled = false;
         } else {

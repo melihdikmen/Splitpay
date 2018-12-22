@@ -20,6 +20,7 @@ import { observer } from "mobx-react";
 
 import Expense from "../../components/GroupEdition/Expense";
 import ExpenseStore from "../../stores/ExpenseStore";
+import ChatStore from "../../stores/ChatStore"
 import AddExpenseButton from "../../components/GroupEdition/AddExpenseButton";
 
 import Header from "../../components/Header";
@@ -49,6 +50,7 @@ export default class GroupExpense extends Component {
   };
   componentWillMount() {
     ExpenseStore.setGroupId(this.props.navigation.getParam("id"));
+    ChatStore.setGroupId(this.props.navigation.getParam("id"))
     ExpenseStore.getAll();
     
     

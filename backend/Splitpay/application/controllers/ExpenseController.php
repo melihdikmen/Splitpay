@@ -179,8 +179,18 @@ class ExpenseController extends CI_Controller {
 
 		public function addMember(){
 
+			
+
 			$json = file_get_contents('php://input');
 			$obj = json_decode($json,true);
+
+		
+	
+			$json = file_get_contents('php://input');
+			$obj = json_decode($json,true);
+	
+	
+			
 
 			$data=array(
 				'userId'=>$obj['userId'],
@@ -192,6 +202,9 @@ class ExpenseController extends CI_Controller {
 
 			if($result)
 			{
+				
+				
+
 				echo json_encode($result);
 			}
 

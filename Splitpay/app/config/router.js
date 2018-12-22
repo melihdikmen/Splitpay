@@ -20,6 +20,7 @@ import Members from "../pages/GroupEditions/Members";
 import AddMember from "../pages/GroupEditions/AddMember";
 import SettleUp from "../pages/GroupEditions/SettleUp";
 import PickPhoto from "../pages/GroupEditions/PickPhoto"
+import Chat from '../pages/GroupEditions/Chat'
 
 
 
@@ -104,6 +105,16 @@ const tabs = createBottomTabNavigator(
         )
       }
       
+    },
+
+    Chat:{
+      screen:Chat,
+      navigationOptions: {
+        title: "Sohbet",
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Icon name={"comment"} color={tintColor} size={focused ? 25 : 20} />
+        )
+      }
     },
 
     GroupSettingStack: {

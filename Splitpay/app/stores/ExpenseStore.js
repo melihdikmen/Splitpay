@@ -2,7 +2,7 @@ import { observable, action, computed, toJS } from "mobx";
 
 import { Alert, ToastAndroid } from "react-native";
 import api from "../config/config";
-
+import ChatStore from "./ChatStore"
 
 class ExpenseStore {
   @observable
@@ -200,11 +200,12 @@ class ExpenseStore {
           groupId: this.groupId
         })
       })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(responseJson => {
           // If server response message same as Data Matched
           if (responseJson) {
             console.warn(responseJson);
+            ChatStore.AddMember(userId)
             success();
           } else {
             alert("üye eklenemdi");

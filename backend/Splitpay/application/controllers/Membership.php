@@ -47,6 +47,13 @@ class Membership extends CI_Controller {
 
 	public function register()
 	{	
+		require_once('vendor/autoload.php');
+
+		$chatkit = new Chatkit\Chatkit([
+			'instance_locator' => 'v1:us1:07e507ed-1800-4f8e-a9d7-dd159a60b9f4',
+			'key' => '1f6a2d90-0d5e-4596-9204-0df0c4067ab0:daapDNShkarWi87y6b7NulEyaW7rdOb/1BOVMS0Dlx8='
+		  ]);
+
 		$json = file_get_contents('php://input');
 		$obj = json_decode($json,true);
 		
@@ -63,12 +70,19 @@ class Membership extends CI_Controller {
 		
 		if(!$userControl)
 		{
-			$data=$this->LoginModel->register($data);
+			$result=$this->LoginModel->register($data);
 
 
-			if($data)
+			if($result["isRegister"])
 		{
+			
+			$chatkit->createUser([
+				'id' => (string)$result["last_id"],
+				'name' => $obj["username"]
+			  ]);
+
 			echo json_encode("true");
+
 		}
 
 		else{
@@ -89,6 +103,8 @@ class Membership extends CI_Controller {
 		
 		
 	}
+
+	
 
 
 	

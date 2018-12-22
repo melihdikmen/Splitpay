@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import GroupStore from '../stores/GroupsStore'
 import ExpenseStore from '../stores/ExpenseStore';
+import ChatStore from '../stores/ChatStore'
 export default class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +28,8 @@ export default class AuthLoadingScreen extends React.Component {
     // screen will be unmounted and thrown away.
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   ExpenseStore.setFullname(user.fullname,user.userId)
+  ChatStore.setUserId(user.userId)
+
   
 
   };

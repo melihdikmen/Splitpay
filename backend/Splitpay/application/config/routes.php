@@ -68,6 +68,9 @@ $route['getGroupInfo']='ExpenseController/getGroupInfo';
 $route['getSummary']='ExpenseController/getSummary';
 $route['upload']='ExpenseController/upload';
 $route['deleteMember']='ExpenseController/deleteMember';
+$route['getMessages']="Chat/getRoomMessages";
+$route['getRoomId']="Chat/getRoomId";
+
 
 
 

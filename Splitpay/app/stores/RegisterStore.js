@@ -70,8 +70,10 @@ class store {
       .then(response => response.json())
       .then(responseJson => {
         // If server response message same as Data Matched
-        if (responseJson==true) {
+        if (responseJson=="true") {
+         
           success()
+          console.warn(responseJson)
         } else if (responseJson == "isUse") {
           Alert.alert("Kayıt Hatası", "Kullancı adı kullanımda", [
             { text: "OK", onPress: () => console.log("OK Pressed") }
@@ -80,6 +82,8 @@ class store {
           Alert.alert("Kayıt Hatası", "Kayıt olunamadı", [
             { text: "OK", onPress: () => console.log("OK Pressed") }
           ]);
+          console.warn(responseJson)
+
         }
       })
       .catch(error => {
