@@ -10,11 +10,12 @@ import {
 import GroupStore from '../stores/GroupsStore'
 import ExpenseStore from '../stores/ExpenseStore';
 import ChatStore from '../stores/ChatStore'
+import ProfileStore from '../stores/ProfileStore'
 export default class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
-  //AsyncStorage.removeItem("userToken")
+ // AsyncStorage.removeItem("userToken")
   
   }
 
@@ -22,6 +23,9 @@ export default class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
    user=JSON.parse(userToken)
+
+  
+  
    
    user?GroupStore.setUserId(user.userId):GroupStore.setUserId(-1)
     // This will switch to the App screen or Auth screen and this loading
@@ -29,6 +33,8 @@ export default class AuthLoadingScreen extends React.Component {
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   ExpenseStore.setFullname(user.fullname,user.userId)
   ChatStore.setUserId(user.userId)
+  ProfileStore.set(user)
+
 
   
 

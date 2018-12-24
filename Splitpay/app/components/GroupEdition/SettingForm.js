@@ -16,10 +16,12 @@ export default class SettingForm extends Component {
         
         <View style={{justifyContent: 'flex-end',flex:2}}>
         <TextInput
+        secureTextEntry={this.props.secureTextEntry}
             onChangeText={this.props.onchange}
           defaultValue={this.props.value}
           underlineColorAndroid={"transparent"}
           style={styles.input}
+          placeholder={this.props.placeholder}
         /></View>
       </View>
     );

@@ -99,6 +99,7 @@ export default class GroupExpense extends Component {
             data={ExpenseStore.getExpenses}
             renderItem={({ item }) => (
               <TouchableOpacity
+              onPress={()=>{this.props.navigation.navigate("ExpenseDetails"), ExpenseStore.getExpenseDetails(item.expenseId)}}
                 onLongPress={() => {
                   Alert.alert(
                     "Gider Silme",

@@ -2,7 +2,10 @@ import {
   SwitchNavigator,
   StackNavigator,
   createStackNavigator,
-  createBottomTabNavigator
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator
+
+
 } from "react-navigation";
 import React, { Component } from "react";
 
@@ -19,8 +22,10 @@ import GroupSettings from "../pages/GroupEditions/GroupSettings";
 import Members from "../pages/GroupEditions/Members";
 import AddMember from "../pages/GroupEditions/AddMember";
 import SettleUp from "../pages/GroupEditions/SettleUp";
-import PickPhoto from "../pages/GroupEditions/PickPhoto"
 import Chat from '../pages/GroupEditions/Chat'
+import ProfileSettings from '../pages/ProfileSettings'
+import ChangePassword from '../pages/ChangePassword'
+import ExpenseDetails from '../pages/GroupEditions/ExpenseDetails'
 
 
 
@@ -32,10 +37,19 @@ const GroupEdit = createStackNavigator(
 
     AddExpense: {
       screen: AddExpense
+    },
+
+    ExpenseDetails:{
+      screen:ExpenseDetails,
+      navigationOptions:{
+        header:null
+      }
     }
   },
   {}
 );
+
+
 
 const AuthStack = StackNavigator({
   Login: {
@@ -141,6 +155,49 @@ const tabs = createBottomTabNavigator(
   }
 );
 
+
+const topTab=createMaterialTopTabNavigator({
+
+  ProfileSettings:{
+    screen:ProfileSettings,
+    navigationOptions:{
+      header:null,
+      title:"Profil Ayarları"
+    }
+  },
+
+  ChangePassword:{
+    screen:ChangePassword,
+    navigationOptions:{
+      title:"Şifre Değiştir"
+    }
+  }
+
+
+},
+{
+  tabBarOptions:{
+    style:{
+      backgroundColor: "white",
+      elevation:0,
+      borderBottomWidth: 1,
+      borderBottomColor:"#dddd" ,
+    },
+    labelStyle :{
+      color:"black"
+    },
+    indicatorStyle :{
+      backgroundColor:"red"
+    },
+    upperCaseLabel :false
+  }
+
+})
+
+
+
+
+
 const AppStack = StackNavigator(
   {
     Home: {
@@ -150,12 +207,22 @@ const AppStack = StackNavigator(
     AddGroup: {
       screen: AddGroup
     },
+    
+    topTab:{
+      screen:topTab,
+      navigationOptions:{
+        header:null
+      },
+      
+    },
 
+   
     tabs: {
       screen: tabs,
       navigationOptions: {
         header: null
-      }
+      },
+      
     }
   },
   {

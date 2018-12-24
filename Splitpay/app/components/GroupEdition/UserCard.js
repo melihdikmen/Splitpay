@@ -28,7 +28,7 @@ export default class UserCard extends Component {
         <View style={styles.profilePhoto}>
           <TouchableOpacity>
             <Image
-              source={{ uri: api + "/uploads/avatar.png" }}
+              source={{  uri: api + "uploads/"+this.props.path+".jpg" + "?" + new Date() }}
               style={styles.avatar}
             />
           </TouchableOpacity>

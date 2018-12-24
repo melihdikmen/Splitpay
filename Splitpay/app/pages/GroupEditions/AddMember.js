@@ -74,6 +74,7 @@ export default class AddMember extends Component {
               data={ExpenseStore.getUser}
               renderItem={({ item }) => (
                 <UserCard
+                path={item.path}
                   fullname={item.fullname}
                   text={"Ekle"}
                   onpress={() => {

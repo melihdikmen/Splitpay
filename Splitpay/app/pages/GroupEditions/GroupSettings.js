@@ -13,7 +13,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-  RefreshControl
+ 
 } from "react-native";
 import api from "../../config/config";
 
@@ -23,9 +23,8 @@ import AddButton from "../../components/GroupEdition/AddExpenseButton";
 import { observer } from "mobx-react";
 import ExpenseStore from "../../stores/ExpenseStore";
 import ImagePicker from "react-native-image-picker";
-
 const options = {
-  title: "Resim Seç",
+  title: "Fotoğraf Seç",
   takePhotoButtonTitle: "Fotoğraf Çek",
   chooseFromLibraryButtonTitle: "Galeriden Seç",
   quality: 1

@@ -27,6 +27,8 @@ class ExpenseStore {
   @observable groupName=""
   @observable groupInfo=""
   @observable path;
+  @observable details=[]
+  @observable users=[]
 
   @action setGroupName(text) {
     this.groupName = text;
@@ -108,6 +110,36 @@ class ExpenseStore {
     console.warn(this.path)
     return toJS(this.path);
   
+  }
+
+
+  @action getExpenseDetails(expenseId)
+  { 
+    this.users=[]
+    this.details=this.data.filter(item=>item.expenseId==expenseId)
+    console.warn(this.details)
+    
+             
+    let  usersId=this.details[0].users.split(",")
+    console.warn(usersId)
+    
+      usersId.forEach(element => {
+        
+          this.members.forEach(item => {
+             
+            if(element==item.userId)
+            {
+              this.users.push(item)
+             
+            }
+
+            
+          });
+        
+      });
+
+    console.warn(this.users)
+    
   }
 
   @action UploadImage(){
@@ -338,6 +370,8 @@ class ExpenseStore {
         // If server response message same as Data Matched
         if (responseJson) {
           this.data = responseJson;
+          console.warn(responseJson)
+          this.getMembers()
         } else {
           this.data = "";
         }

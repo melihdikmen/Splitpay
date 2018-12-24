@@ -93,8 +93,8 @@ class ChatStore {
               createdAt: element.created_at,
               user: {
                 _id: element.user_id,
-                name: "aaa",
-                avatar: "https://placeimg.com/140/140/any"
+                name: element.name,
+                avatar:  api + "uploads/"+element.user_id+".jpg"+ "?" + new Date()
               }
             });
           });
@@ -142,8 +142,8 @@ class ChatStore {
                 createdAt: message.createdAt,
                 user: {
                   _id: message.sender.id,
-                  name: "aaa",
-                  avatar: "https://placeimg.com/140/140/any"
+                  name: message.sender.name,
+                  avatar:  api + "uploads/"+message.sender.id+".jpg"+ "?" + new Date()
                 }
               });
             }

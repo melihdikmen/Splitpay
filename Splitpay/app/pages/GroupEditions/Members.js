@@ -56,7 +56,7 @@ export default class Members extends Component {
             <FlatList
               data={ExpenseStore.Members}
               renderItem={({ item }) => (
-                <UserCard  display={"none"}text={"Sil"} fullname={item.fullname} onpress={()=>{
+                <UserCard  path={item.path} display={"none"}text={"Sil"} fullname={item.fullname} onpress={()=>{
                   ExpenseStore.DeleteMember(item.userId,this.success)
                 }} />
               )}

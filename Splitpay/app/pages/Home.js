@@ -13,10 +13,15 @@ import {
 } from "react-native";
 import { observer } from "mobx-react";
 
+import { DrawerActions } from 'react-navigation';
+
+
+
+
 import Groups from "../components/Home/groups";
 import GroupsStore from "../stores/GroupsStore";
 
-import Header from "../components/Header";
+import HomeHeader from "../components/HomeHeader";
 
 
 @observer
@@ -59,16 +64,16 @@ export default class index extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       header: (
-        <Header
+        <HomeHeader
           onPress={() => {
-             AsyncStorage.removeItem("userToken")
-             navigation.navigate("AuthLoading")
+            
+         navigation.navigate("ProfileSettings")
           }}
           add={() => {
             navigation.navigate("AddGroup");
           }}
-          title={"Grup Ayarları"}
-          backOpacity={0}
+          title={"Gruplar"}
+          
         />
       )
     };
@@ -82,6 +87,7 @@ export default class index extends Component {
     return (
       <View style={{ backgroundColor: "#FFFF", flex: 1 }}>
         <StatusBar backgroundColor="#000" barStyle="light-content" />
+       
         <FlatList
           refreshControl={
             <RefreshControl
