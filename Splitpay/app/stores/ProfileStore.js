@@ -98,7 +98,15 @@ class store {
     else
     {
 
-      alert("şifreler aynı değil")
+      Alert.alert(
+        'Hata',
+        'Şifreler aynı değil.',
+        [
+          
+          {text: 'Tamam', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
 
     }
 
@@ -172,7 +180,15 @@ class store {
           ToastAndroid.show('Fotoğraf değiştirme işlemi başarılı.', ToastAndroid.SHORT);
           
         } else {
-          console.warn("yüklenemedi");
+          Alert.alert(
+            'Hata',
+            'Fotoğraf Yüklenemedi',
+            [
+              
+              {text: 'Tamam', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
          
         }
       })

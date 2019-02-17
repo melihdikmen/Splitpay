@@ -32,15 +32,14 @@ class GroupsModel extends CI_Model{
          $this->db->delete("expenses",$where3);
         
         $this->db->delete("members",$where3);
-      return  $this->db->delete("groups",$where);
 
-        }
-
-        else{
         
-            return $this->db->delete("members",$where2);
+
+         return  $this->db->delete("groups",$where);
 
         }
+
+       
        
 
         

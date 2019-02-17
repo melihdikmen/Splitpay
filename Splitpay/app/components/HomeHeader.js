@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   title: {
     justifyContent: "center",
-    flex: 3
+    flex: 2
   },
 
   addButton: {

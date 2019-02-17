@@ -27,18 +27,39 @@ export default class ChangePassword extends Component {
 
   render() {
     return (
-        <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
-      <View style={styles.container}>
-        <View style={styles.form}>
-          <SettingForm  secureTextEntry={true} onchange={(text)=>{ProfileStore.setPassword(text)}} placeholder={"Yeni Şifreyi Giriniz"} title={"Şifre"} />
-          <SettingForm   secureTextEntry={true} onchange={text=>{ProfileStore.setPasswordAgain(text)}}placeholder={"Yeni Şifreyi Giriniz"}  title={"Şifre Tekrar"} />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.form}>
+            <SettingForm
+              secureTextEntry={true}
+              onchange={text => {
+                ProfileStore.setPassword(text);
+              }}
+              placeholder={"Yeni Şifreyi Giriniz"}
+              title={"Şifre"}
+            />
+            <SettingForm
+              secureTextEntry={true}
+              onchange={text => {
+                ProfileStore.setPasswordAgain(text);
+              }}
+              placeholder={"Yeni Şifreyi Giriniz"}
+              title={"Şifre Tekrar"}
+            />
+          </View>
+          <View style={styles.AddButton}>
+            <AddButton
+              onPress={() => {
+                ProfileStore.ChangePassword();
+              }}
+              text={"Değiştir"}
+            />
+          </View>
         </View>
-        <View style={styles.AddButton}>
-          <AddButton onPress={()=>{
-              ProfileStore.ChangePassword()
-          }} text={"Değiştir"} />
-        </View>
-      </View>
       </TouchableWithoutFeedback>
     );
   }
@@ -54,7 +75,7 @@ const styles = StyleSheet.create({
     //flex: 3,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 50
   },
   form: {
     //flex:1

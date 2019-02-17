@@ -17,10 +17,8 @@ import { observer, inject } from "mobx-react";
 import Header from "../../components/Header";
 import ChatStore from "../../stores/ChatStore";
 import { GiftedChat } from "react-native-gifted-chat";
-import {
-  ChatManager,
-  TokenProvider
-} from "@pusher/chatkit-client/react-native";
+
+
 
 
 
@@ -29,7 +27,7 @@ export default class Chat extends Component {
   constructor(props) {
     super(props);
   }
-  componentWillMount() {
+  componentDidMount() {
     ChatStore.getRoomId()
     ChatStore.GetAllMessages();
     ChatStore.OnMessage()
@@ -37,7 +35,7 @@ export default class Chat extends Component {
   
   }
 
-
+  
   
 
   
@@ -63,6 +61,7 @@ export default class Chat extends Component {
           user={{
             _id: ChatStore.userId
           }}
+          
         />
       </View>
     );

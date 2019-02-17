@@ -1,5 +1,6 @@
 import { observable, action, computed, toJS } from "mobx";
 import api from "../config/config";
+import {Alert} from "react-native"
 class GroupsStore {
   @observable
   data = ([] = "");
@@ -56,14 +57,22 @@ class GroupsStore {
         groupId: groupId
       })
     })
-      .then(response => response.text())
+      .then(response => response.json())
       .then(responseJson => {
         // If server response message same as Data Matched
         if (responseJson) {
           console.warn(responseJson)
           success();
-        } else {
-          alert("silinemedi");
+        } else if(responseJson=="") {
+          Alert.alert(
+            'Hata',
+            'Grup silinemedi',
+            [
+             
+              {text: 'Tamam', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
         }
       })
       .catch(error => {
@@ -94,7 +103,15 @@ class GroupsStore {
 
           this.enabled = false;
         } else {
-          alert("eklenemedi");
+          Alert.alert(
+            'Hata',
+            'Grup oluşturulamadı.',
+            [
+              
+              {text: 'Tamam', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
         }
       })
       .catch(error => {

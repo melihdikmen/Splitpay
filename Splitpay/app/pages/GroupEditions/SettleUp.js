@@ -5,7 +5,14 @@
  */
 
 import React, { Component } from "react";
-import { StyleSheet, View, FlatList, RefreshControl,ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+  Text
+} from "react-native";
 import { observer } from "mobx-react";
 import ExpenseStore from "../../stores/ExpenseStore";
 import Header from "../..//components/Header";
@@ -30,6 +37,7 @@ export default class SettleUp extends Component {
     ExpenseStore.SettleUp();
     this.setState({ refreshing: false });
   };
+
   render() {
     return (
       <View style={styles.container}>
@@ -42,24 +50,6 @@ export default class SettleUp extends Component {
           opacity={0}
         />
         <FlatList
-          ListHeaderComponent={() => {
-            return ExpenseStore.getSettling ? (
-              ExpenseStore.getSettling.length < 1 && (
-                <ActivityIndicator color={"#ff1443"} size={"large"} />
-              )
-            ) : (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flex: 1,
-                  marginTop: 10
-                }}
-              >
-                <Text style={{ fontSize: 25 }}>Harcama Yok</Text>
-              </View>
-            );
-          }}
           refreshControl={
             <RefreshControl
               tintColor="#ff00ff"
@@ -74,6 +64,7 @@ export default class SettleUp extends Component {
           )}
         />
       </View>
+    
     );
   }
 }

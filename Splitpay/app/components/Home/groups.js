@@ -14,7 +14,7 @@ export default class Groups extends Component {
       <View style={styles.container}>
         <View style={styles.groupPhoto}>
           <Image
-            style={{ flex: 1 }}
+            style={{ height:80,width:80,borderRadius:40 }}
             source={{ uri: api+"/uploads/group/"+this.props.path+".jpg"+ '?' + new Date() }}
           />
         </View>
@@ -38,19 +38,24 @@ export default class Groups extends Component {
 const styles = StyleSheet.create({
   container: {
     height: 100,
-    backgroundColor: "#ff1443",
-    margin: 10,
+    backgroundColor: "transparent",
+   // margin: 10,
     marginTop: 15,
     flexDirection: "row",
-     elevation: 1
+    // elevation: 1,
+     borderBottomWidth: 1,
+     borderBottomColor: "#dddd",
   },
   groupPhoto: {
-    flex: 3,
-    backgroundColor: "#ff1443"
+    flex: 2,
+    backgroundColor: "transparent",
+    justifyContent:'center',
+    marginLeft: 5,
+   
   },
   content: {
     flex: 3,
-    backgroundColor: "#FFF"
+    backgroundColor: "transparent"
   },
   groupName: {
     margin: 10,

@@ -6,7 +6,8 @@ import {
   View,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Modal
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { observer } from "mobx-react";
@@ -31,6 +32,12 @@ export default class index extends Component {
     return (
      < TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
       <KeyboardAvoidingView style={styles.container}>
+      <Modal animationType="slide" visible={LoginStore.netCheck} transparent={true}>
+        <View style={{height:20,backgroundColor:"#ff1443",justifyContent:"center",alignItems: 'center',}}>
+        <Text style={{color:"white",marginLeft: 5,marginRight: 5,fontSize:13}}>İnternet Bağlantısı Hatası!Aktif bir İnternet bağlantısı yok.</Text>
+        </View>
+       
+        </Modal>
         <View style={styles.logo}>
           <Text style={styles.logoText}>Splitpay</Text>
         </View>

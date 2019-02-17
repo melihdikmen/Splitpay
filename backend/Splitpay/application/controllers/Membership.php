@@ -79,7 +79,8 @@ class Membership extends CI_Controller {
 			
 			$chatkit->createUser([
 				'id' => (string)$result["last_id"],
-				'name' => $obj["username"]
+				'name' => $obj["username"],
+				'avatar_url' => 'http://splitpay.ml/Splitpay/uploads/null.jpg',
 			  ]);
 
 			echo json_encode("true");
@@ -208,7 +209,7 @@ class Membership extends CI_Controller {
 		  $chatkit->updateUser([
 			'id' => (string)$_POST["userId"],
 			
-			'avatar_url' => 'http://192.168.1.102/Splitpay/uploads/'.$_POST["userId"].'.jpg',
+			'avatar_url' => 'http://splitpay.ml/Splitpay/uploads/'.$_POST["userId"].'.jpg',
 			
 		  ]);
 			

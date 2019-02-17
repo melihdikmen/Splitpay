@@ -55,7 +55,7 @@ class ExpenseController extends CI_Controller {
 		$data=array(
 			'groupId'=>$obj['groupId'],
 			'expenseTitle'=>$obj['expenseTitle'],
-			'paid'=>$obj['paid'],
+			'paid'=>(double)$obj['paid'],
 			'fullname'=>$obj['fullname'],
 			'date'=>$obj['date'],
 			'users'=>implode(",",$obj['users'])
@@ -63,17 +63,23 @@ class ExpenseController extends CI_Controller {
 		);
 
 		$result=$this->ExpenseModel->AddExpense($data,$obj['userId']);
+		$all=0;
+		foreach ($obj['payable'] as  $value) {
 		
+			$all=$all+$value["ratio"];
+		}
+
+		$single=$obj["paid"]/$all;
 		
-		foreach ($obj['users'] as  $value) {
+		foreach ($obj['payable'] as  $value) {
 			$where=array(
 				'groupId'=>$obj["groupId"],
-				'userId'=>$value,
+				'userId'=>$value["userId"],
 			);
 
 			
 
-			$end=$this->ExpenseModel->MemberSum($where,$obj["payable"]);
+			$end=$this->ExpenseModel->MemberSum($where,$value["ratio"]*$single);
 		};
 
 		
@@ -85,9 +91,9 @@ class ExpenseController extends CI_Controller {
 		
 
 
-		if($result)
+		if($data)
 		{
-			echo json_encode($result);
+			echo json_encode($data);
 
 		
 		

@@ -9,18 +9,19 @@ import {
   RefreshControl,
   Alert,
   ToastAndroid,
-  AsyncStorage
+  Modal,
+  NetInfo
 } from "react-native";
 import { observer } from "mobx-react";
 
-import { DrawerActions } from 'react-navigation';
+
 
 
 
 
 import Groups from "../components/Home/groups";
 import GroupsStore from "../stores/GroupsStore";
-
+import LoginStore from "../stores/LoginStore"
 import HomeHeader from "../components/HomeHeader";
 
 
@@ -31,8 +32,12 @@ export default class index extends Component {
 
     this._onRefresh = this._onRefresh.bind(this);
     this.state = {
-      refreshing: false
+      refreshing: false,
+      
     };
+
+
+   
   }
 
   success = () => {
@@ -87,7 +92,12 @@ export default class index extends Component {
     return (
       <View style={{ backgroundColor: "#FFFF", flex: 1 }}>
         <StatusBar backgroundColor="#000" barStyle="light-content" />
+        <Modal animationType="slide" visible={LoginStore.netCheck} transparent={true}>
+        <View style={{height:20,backgroundColor:"#ff1443",justifyContent:"center",alignItems: 'center',}}>
+        <Text style={{color:"white",marginLeft: 5,marginRight: 5,fontSize:13}}>İnternet Bağlantısı Hatası!Aktif bir İnternet bağlantısı yok.</Text>
+        </View>
        
+        </Modal>
         <FlatList
           refreshControl={
             <RefreshControl

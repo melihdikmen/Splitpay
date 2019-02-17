@@ -1,6 +1,6 @@
 import { observable, action, computed, toJS, autorun } from "mobx";
 import api from "../config/config";
-
+import ExpenseStore from './ExpenseStore'
 import {} from "react-native";
 
 import {
@@ -14,6 +14,8 @@ class ChatStore {
 
   @observable
   userId = "";
+
+  @observable path=null
 
   @observable roomId = "";
 
@@ -40,6 +42,17 @@ class ChatStore {
   @action setUserId(userId) {
     this.userId = userId;
     //console.warn(this.userId)
+  }
+
+  @action ImagePath(userId){
+
+    ExpenseStore.Members.forEach(element => {
+      if(element.userId==userId)
+      {
+        console.warn(element.path)
+       this.path=element.path
+      }
+    });
   }
 
   @action getRoomId() {
@@ -87,6 +100,7 @@ class ChatStore {
         if (responseJson) {
           console.warn(responseJson);
           responseJson.forEach(element => {
+            this.ImagePath(element.user_id)
             this.messages.push({
               _id: element.id,
               text: element.text,
@@ -94,7 +108,8 @@ class ChatStore {
               user: {
                 _id: element.user_id,
                 name: element.name,
-                avatar:  api + "uploads/"+element.user_id+".jpg"+ "?" + new Date()
+                  
+                avatar:  api + "uploads/"+this.path+".jpg"+ "?" + new Date()
               }
             });
           });
@@ -136,6 +151,7 @@ class ChatStore {
         hooks: {
           onMessage: message => {
             if (this.control(message)) {
+              this.ImagePath(message.sender.id)
               this.messages.unshift({
                 _id: message.id,
                 text: message.text,
@@ -143,7 +159,7 @@ class ChatStore {
                 user: {
                   _id: message.sender.id,
                   name: message.sender.name,
-                  avatar:  api + "uploads/"+message.sender.id+".jpg"+ "?" + new Date()
+                  avatar: api + "uploads/"+this.path+".jpg"+ "?" + new Date()
                 }
               });
             }
@@ -174,6 +190,32 @@ class ChatStore {
         text: message.text
       });
     });
+  }
+
+  @action DeleteMember(userId){
+
+    const chatManager = new ChatManager({
+      instanceLocator: "v1:us1:07e507ed-1800-4f8e-a9d7-dd159a60b9f4",
+      userId: this.userId.toString(),
+      tokenProvider: new TokenProvider({
+        url:
+          "https://us1.pusherplatform.io/services/chatkit_token_provider/v1/07e507ed-1800-4f8e-a9d7-dd159a60b9f4/token"
+      })
+    });
+
+    chatManager.connect().then(currentUser => {
+      currentUser.removeUserFromRoom({
+        userId: userId.toString(),
+        roomId: this.roomId
+      })
+        .then(() => {
+          console.warn('Removed leah from room 123')
+        })
+        .catch(err => {
+          console.warn(`Error removing leah from room 123: ${err}`)
+        })
+      })
+
   }
 
   @action AddMember(userId) {

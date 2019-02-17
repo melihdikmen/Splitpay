@@ -52,6 +52,8 @@ export default class GroupExpense extends Component {
     ExpenseStore.setGroupId(this.props.navigation.getParam("id"));
     ChatStore.setGroupId(this.props.navigation.getParam("id"))
     ExpenseStore.getAll();
+    ExpenseStore.getMembers()
+    ChatStore.getRoomId()
     
     
     

@@ -26,8 +26,13 @@ export default class Members extends Component {
   }
 
   success(){
+    
     ExpenseStore.getMembers()
   }
+
+ 
+
+  
 
   static navigationOptions = ({ navigation }) => {
     return {
@@ -56,7 +61,7 @@ export default class Members extends Component {
             <FlatList
               data={ExpenseStore.Members}
               renderItem={({ item }) => (
-                <UserCard  path={item.path} display={"none"}text={"Sil"} fullname={item.fullname} onpress={()=>{
+                <UserCard  path={item.path}  text={"Sil"} fullname={item.fullname} onpress={()=>{
                   ExpenseStore.DeleteMember(item.userId,this.success)
                 }} />
               )}

@@ -24,7 +24,7 @@ class ExpenseModel extends CI_Model{
         $members=$this->db->get("members")->row();
        
         $update=array(
-            'paid'=>$members->paid+$data["paid"]
+            'paid'=>$members->paid+$data["paid"] 
 
         );
 

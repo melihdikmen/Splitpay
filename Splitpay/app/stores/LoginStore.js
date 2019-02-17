@@ -10,8 +10,17 @@ class store {
   @observable
   password = "";
 
+  @observable netCheck=false
+
   @observable
   disabled = true;
+
+  @action setNetCheck(val){
+
+    this.netCheck=val
+
+  }
+
   @action
   setUsername(username) {
     this.username = username;

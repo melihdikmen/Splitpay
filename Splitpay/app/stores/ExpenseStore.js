@@ -13,12 +13,12 @@ class ExpenseStore {
 
   @observable foundUser = ([] = "");
 @observable image
-  @observable settling=[]
+  @observable settling=[]=""
   @observable userId = 0;
   @observable
   ExpenseTitle = "";
   @observable
-  paid = 0.0;
+  paid = 0;
   @observable
   date = "";
   @observable
@@ -29,16 +29,56 @@ class ExpenseStore {
   @observable path;
   @observable details=[]
   @observable users=[]
+  @observable ExpenseUsers=[]
+  @observable ratio=1
+  @observable payable=[]
 
   @action setGroupName(text) {
     this.groupName = text;
+  }
+
+  @action setRatio(text,userId)
+  {
+    this.ratio=text
+    let cont=false
+    if(this.payable!=""){
+      this.payable.forEach(element => {
+          if(element.userId==userId)
+          {
+            cont=true
+            element.ratio=this.ratio
+          }
+
+         
+          
+    });
+          if(!cont)
+          {
+            this.payable.push({"userId":userId,"ratio":this.ratio})
+          }
+          
+
+
+    }
+
+
+    else{
+      this.payable.push({"userId":userId,"ratio":this.ratio})
+    }
+      
+  
+
+    
+   
+
+    console.warn(this.payable)
   }
 
   @action setPath(text){
    
     this.path=text
     
-    
+     
   }
 
   @action setImage(uri)
@@ -49,10 +89,42 @@ class ExpenseStore {
   @action setFirstMember() {
     this.selectedItems = [];
     this.selectedItems.push(this.userId);
+    this.payable.push({"userId":this.userId,"ratio":this.ratio})
+    this.ExpenseUsers=[]
+    
+   
   }
+  
   @action setSelectedItems(items) {
-    this.selectedItems = items;
-    console.warn(this.selectedItems);
+    this.ExpenseUsers=[]
+    this.payable=[]
+    this.selectedItems= items
+    //console.warn(this.selectedItems);
+
+    
+    this.getRatio()
+ 
+
+
+  }
+  
+  @action getRatio()
+  {
+    this.members.forEach(element => {
+        
+      this.selectedItems.forEach(item => {
+         
+        if(element.userId==item)
+        {
+          this.ExpenseUsers.push(element)
+         
+        }
+
+        
+      });
+    
+  });
+  console.warn(this.ExpenseUsers)
   }
 
   @action setGroupInfo(text) {
@@ -86,6 +158,7 @@ class ExpenseStore {
 
   @computed
   get getExpenses() {
+    console.warn(this.data)
     return this.data;
   }
 
@@ -111,6 +184,8 @@ class ExpenseStore {
     return toJS(this.path);
   
   }
+
+  
 
 
   @action getExpenseDetails(expenseId)
@@ -182,6 +257,19 @@ class ExpenseStore {
   }
 
   @action DeleteMember(userId, success) {
+
+    if(this.data!=[])
+    this.data.forEach(element => {
+    this.users= element.users.split(",")
+    });
+    
+    
+    console.warn(this.users.indexOf(userId))
+
+    if(this.users.indexOf(userId)==-1)
+    {
+
+      
     fetch(api + "/deleteMember", {
       method: "POST",
       headers: {
@@ -198,6 +286,7 @@ class ExpenseStore {
         // If server response message same as Data Matched
         if (responseJson) {
           success();
+          ChatStore.DeleteMember(userId)
           console.warn(responseJson);
         } else {
           Alert.alert(
@@ -212,6 +301,22 @@ class ExpenseStore {
       .catch(error => {
         console.error(error);
       });
+    }
+
+    else{
+
+      Alert.alert(
+        'Hata',
+        'Üye silinemedi.',
+        [
+         
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    }
+
+
   }
 
   @action AddMember(userId, success) {
@@ -240,7 +345,15 @@ class ExpenseStore {
             ChatStore.AddMember(userId)
             success();
           } else {
-            alert("üye eklenemdi");
+            Alert.alert(
+              'Hata',
+              'Üye eklenemedi',
+              [
+                
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ],
+              { cancelable: false }
+            )
           }
         })
         .catch(error => {
@@ -326,10 +439,10 @@ class ExpenseStore {
           date: this.date,
           users: this.selectedItems,
           userId: this.userId,
-          payable: this.paid / this.selectedItems.length
+          payable: this.payable
         })
       })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(responseJson => {
           // If server response message same as Data Matched
           if (responseJson) {
@@ -349,7 +462,15 @@ class ExpenseStore {
           console.error(error);
         });
     } else {
-      alert("boş bırakmayınız");
+      Alert.alert(
+        'Hata',
+        'Boş yer bırakmayın.',
+        [
+          
+          {text: 'Tamam', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
     }
   }
 
@@ -371,7 +492,7 @@ class ExpenseStore {
         if (responseJson) {
           this.data = responseJson;
           console.warn(responseJson)
-          this.getMembers()
+          
         } else {
           this.data = "";
         }
@@ -552,7 +673,9 @@ class ExpenseStore {
                 
               };
             }
+            
           });
+         
           console.warn(this.settling)
         } else {
           this.settling=""
